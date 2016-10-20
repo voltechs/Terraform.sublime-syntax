@@ -24,8 +24,15 @@ Installation
     - OS X: `~/Library/Application Support/Sublime Text 3/Packages/`
     - Windows: `%APPDATA%/Sublime Text 3/Packages/`
     - Linux (Ubuntu/Debian): `~/.config/sublime-text-3/Packages/`
+
 2. Clone this repo:
 
         $ git clone https://github.com/tmichel/sublime-terraform
 
+## Configuration
+
+The defaults are available in the [Terraform.sublime-settings`][settings_file]
+file.
+
 [base_repo]: github.com/alexlouden/Terraform.tmLanguage
+[settings_file]: Terraform.sublime-settings
