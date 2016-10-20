@@ -1,12 +1,12 @@
-Terraform Syntax Highlighting And Snippets
-==========================================
+Terraform support for Sublime Text 3
+====================================
 
-Basic support for Terraform's [custom .tf file type](http://www.terraform.io/docs/configuration/syntax.html), along with snippets for each of the basic Terraform resource types.
+Fork of [Terraform.tmLanguage][base_repo] with some sweet improvements.
 
+Features:
 
-![screenshot](screenshot.png)
-![screenshot](screenshot2.png)
-
+* Syntax highlighting for `.tf` files.
+* Format on save using `terraform fmt` (only available in version >= 0.6.15)
 
 Installation
 ------------
@@ -24,4 +24,8 @@ Installation
     - OS X: `~/Library/Application Support/Sublime Text 3/Packages/`
     - Windows: `%APPDATA%/Sublime Text 3/Packages/`
     - Linux (Ubuntu/Debian): `~/.config/sublime-text-3/Packages/`
-2. Clone this repo
+2. Clone this repo:
+
+        $ git clone https://github.com/tmichel/sublime-terraform
+
+[base_repo]: github.com/alexlouden/Terraform.tmLanguage
