@@ -39,6 +39,7 @@ class TerraformFmt(sublime_plugin.TextCommand):
 
     # Something went wrong
     if p.returncode != 0:
+      stderr = '{}: {}'.format(self.view.file_name(), stderr)
       self.show_syntax_errors(stderr)
       return None
 
@@ -55,12 +56,12 @@ class TerraformFmt(sublime_plugin.TextCommand):
     panel = window.create_output_panel('terraform_syntax_errors')
     panel.set_syntax_file('Packages/Text/Plain text.tmLanguage')
     panel.settings().set('line_numbers', False)
+    panel.settings().set('result_file_regex', '^(.+):\s.+At\s(\d+):(\d+):\s(.*)$')
     panel.set_scratch(True)
     panel.set_read_only(False)
     panel.run_command('append', {'characters': errors})
     panel.set_read_only(True)
     window.run_command('show_panel', { 'panel': 'output.terraform_syntax_errors' })
-
 
 def is_terraform_source(view):
   tp = 0
