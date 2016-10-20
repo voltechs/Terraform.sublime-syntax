@@ -29,7 +29,7 @@ class TerraformFmt(sublime_plugin.TextCommand):
     self.view.window().run_command('hide_panel', { 'panel': 'output.terraform_syntax_errors' })
 
   def run_fmt(self):
-    cmd = sublime.load_settings('Terraform.sublime-settings').get('terraform_cmd', 'terraform')
+    cmd = sublime.load_settings('Terraform.sublime-settings').get('terraform_path', 'terraform')
     p = subprocess.Popen(
       ['terraform', 'fmt', '-no-color', '-'],
       stdout=subprocess.PIPE,
