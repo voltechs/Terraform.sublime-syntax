@@ -3,6 +3,7 @@ import sublime_plugin
 
 import subprocess
 import io
+from os import path
 
 class TerraformFmtOnSave(sublime_plugin.EventListener):
   def on_pre_save(self, view):
@@ -39,7 +40,7 @@ class TerraformFmt(sublime_plugin.TextCommand):
 
     # Something went wrong
     if p.returncode != 0:
-      stderr = '{}: {}'.format(self.view.file_name(), stderr)
+      stderr = '{}: {}'.format(path.basename(self.view.file_name()), stderr)
       self.show_syntax_errors(stderr)
       return None
 
@@ -57,6 +58,7 @@ class TerraformFmt(sublime_plugin.TextCommand):
     panel.set_syntax_file('Packages/Text/Plain text.tmLanguage')
     panel.settings().set('line_numbers', False)
     panel.settings().set('result_file_regex', '^(.+):\s.+At\s(\d+):(\d+):\s(.*)$')
+    panel.settings().set('result_base_dir', path.dirname(self.view.file_name()))
     panel.set_scratch(True)
     panel.set_read_only(False)
     panel.run_command('append', {'characters': errors})
