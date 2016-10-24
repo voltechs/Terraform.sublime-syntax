@@ -57,7 +57,15 @@ contexts:
         6: string.quoted.double.terraform
         7: string.terraform punctuation.definition.string.end.terraform
         8: punctuation.definition.tag.terraform
-    - match: '(provider|provisioner|variable|output|module|atlas)\s+(")([\w-]+)(")\s+({)'
+    - match: '(provider|provisioner|variable|module|atlas)\s+(")([\w-]+)(")\s+({)'
+      scope: entity.name.resource.terraform
+      captures:
+        1: storage.type.function.terraform
+        2: string.terraform punctuation.definition.string.begin.terraform
+        3: string.quoted.double.terraform
+        4: string.terraform punctuation.definition.string.end.terraform
+        5: punctuation.definition.tag.terraform
+    - match: '(output)\s+(")([\w-\.]+)(")\s+({)'
       scope: entity.name.resource.terraform
       captures:
         1: storage.type.function.terraform
