@@ -29,28 +29,39 @@ class TerraformFmt(sublime_plugin.TextCommand):
     self.view.window().run_command('hide_panel', { 'panel': 'output.terraform_syntax_errors' })
 
   def run_fmt(self):
+    with self.popen_terraform_fmt() as p:
+      stdout, stderr = [str(s, self.encoding()) for s in p.communicate(input=self.view_content_bytes())]
+
+      # Something went wrong
+      if p.returncode != 0:
+        stderr = '{}: {}'.format(path.basename(self.view.file_name()), stderr)
+        self.show_syntax_errors(stderr)
+        return None
+
+      return stdout
+
+  def popen_terraform_fmt(self):
     cmd = sublime.load_settings('Terraform.sublime-settings').get('terraform_path', 'terraform')
-    p = subprocess.Popen(
-      ['terraform', 'fmt', '-no-color', '-'],
+    return subprocess.Popen(
+      [cmd, 'fmt', '-no-color', '-'],
       stdout=subprocess.PIPE,
       stderr=subprocess.PIPE,
       stdin=subprocess.PIPE)
 
-    stdout, stderr = [str(s, self.view.encoding()) for s in p.communicate(input=self.view_content_bytes())]
-
-    # Something went wrong
-    if p.returncode != 0:
-      stderr = '{}: {}'.format(path.basename(self.view.file_name()), stderr)
-      self.show_syntax_errors(stderr)
-      return None
-
-    return stdout
-
-
   def view_content_bytes(self):
     region = sublime.Region(0, self.view.size())
     buf = self.view.substr(region)
-    return bytes(buf, self.view.encoding())
+    return bytes(buf, self.encoding())
+
+  def encoding(self):
+    enc = self.view.encoding()
+
+    # When a selection is actuve the encoding is undefined. Fall back to utf-8
+    # by default.
+    if enc == "Undefined":
+      return "UTF-8"
+
+    return enc
 
   def show_syntax_errors(self, errors):
     window = self.view.window()
