@@ -13,6 +13,7 @@
                 [
                     {
                         "caption": "Terraform",
+                        "id": "terraform",
                         "children":
                         [
                             {
