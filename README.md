@@ -5,7 +5,7 @@ Fork of [Terraform.tmLanguage][base_repo] with some sweet improvements.
 
 Features:
 
-* Syntax highlighting for `.tf` files.
+* Syntax highlighting for `.tf` and `.tfvars` files.
 * Format on save using `terraform fmt` (only available in version >= 0.6.15)
 
 Installation
