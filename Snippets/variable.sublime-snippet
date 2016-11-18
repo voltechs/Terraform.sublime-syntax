@@ -5,7 +5,7 @@ variable "${1:name}" {
 	${4:default     = "${5:default value}"}
 }
 ]]></content>
-	<tabTrigger>variableE</tabTrigger>
+	<tabTrigger>variable</tabTrigger>
 	<scope>source.terraform</scope>
-	<description>variable (empty)</description>
+	<description>variable (inferred type)</description>
 </snippet>
