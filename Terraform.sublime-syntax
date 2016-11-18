@@ -102,6 +102,14 @@ contexts:
           pop: true
         - include: interpolation
         - include: string_placeholder
+    - match: '<<(\w+)'
+      scope: punctuation.definition.string.begin.terraform
+      comment: Heredoc
+      push:
+        - meta_scope: string.heredoc.terraform
+        - match: '^\1'
+          scope: punctuation.definition.string.end.terraform
+          pop: true
   interpolation:
     - match: '\$\{'
       scope: string.quoted.double.terraform punctuation.section.interpolation.begin.terraform
