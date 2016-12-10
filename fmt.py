@@ -14,8 +14,11 @@ class TerraformFmtOnSave(sublime_plugin.EventListener):
 
 class TerraformFmt(sublime_plugin.TextCommand):
   def is_enabled(self):
-    fmt_enabled = sublime.load_settings('Terraform.sublime-settings').get('format_on_save', True)
-    return fmt_enabled and is_terraform_source(self.view)
+    settings      = sublime.load_settings('Terraform.sublime-settings')
+    fmt_enabled   = settings.get('format_on_save', True)
+    fmt_vars_file = settings.get('format_var_files', False)
+
+    return fmt_enabled and is_terraform_source(self.view) and should_format_vars_file(self.view, fmt_vars_file)
 
   def run(self, edit):
     res = self.run_fmt()
@@ -75,6 +78,12 @@ class TerraformFmt(sublime_plugin.TextCommand):
     panel.run_command('append', {'characters': errors})
     panel.set_read_only(True)
     window.run_command('show_panel', { 'panel': 'output.terraform_syntax_errors' })
+
+def should_format_vars_file(view, enabled):
+  _, ext = path.splitext(view.file_name())
+  if ext != '.tfvars':
+      return True
+  return enabled
 
 def is_terraform_source(view):
   tp = 0
