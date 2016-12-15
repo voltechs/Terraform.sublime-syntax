@@ -109,6 +109,7 @@ contexts:
         - match: '^\1'
           scope: punctuation.definition.string.end.terraform
           pop: true
+        - include: interpolation
   interpolation:
     - match: '\$\{'
       scope: string.quoted.double.terraform punctuation.section.interpolation.begin.terraform
