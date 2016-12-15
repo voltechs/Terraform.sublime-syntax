@@ -90,18 +90,17 @@ contexts:
       captures:
         1: entity.name.section.terraform
         2: punctuation.definition.tag.terraform
-    - match: \"
+    - match: '"'
       comment: Strings
-      captures:
-        0: string.terraform punctuation.definition.string.begin.terraform
+      scope: punctuation.definition.string.begin.terraform
       push:
         - meta_scope: string.quoted.double.terraform
-        - match: \"
-          captures:
-            0: string.terraform punctuation.definition.string.end.terraform
+        - match: '"'
+          scope: punctuation.definition.string.end.terraform
           pop: true
         - include: interpolation
         - include: string_placeholder
+        - include: string_escaped_char
     - match: '<<(\w+)'
       scope: punctuation.definition.string.begin.terraform
       comment: Heredoc
@@ -152,4 +151,9 @@ contexts:
       scope: constant.other.placeholder.terraform
     - match: "%"
       scope: invalid.illegal.placeholder.terraform
+  string_escaped_char:
+    - match: '\\(\\|[abfnrutv''"]|x\h{2}|u\h{4}|U\h{8}|[0-7]{3})'
+      scope: constant.character.escape.terraform
+    - match: \\.
+      scope: invalid.illegal.unknown-escape.terraform
 
