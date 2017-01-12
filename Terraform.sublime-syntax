@@ -5,6 +5,7 @@ name: Terraform
 file_extensions:
   - tf
   - tfvars
+  - .terragrunt
 scope: source.terraform
 contexts:
   main:
