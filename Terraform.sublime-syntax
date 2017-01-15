@@ -47,15 +47,26 @@ contexts:
     - match: '\b(0x[0-9A-Fa-f]+)([kKmMgG]b?)?\b'
       comment: Hex numbers
       scope: constant.numeric.terraform
-    - match: '(resource|data)\s+(")(\w+)(")\s+(")([\w-]+)(")\s+({)'
+    - match: '(resource)\s+(")(\w+)(")\s+(")([\w-]+)(")\s+({)'
       scope: meta.resource.terraform entity.name.resource.terraform
       captures:
         1: storage.type.function.terraform
         2: string.terraform punctuation.definition.string.begin.terraform
-        3: string.quoted.double.terraform
+        3: string.quoted.double.terraform meta.resource.type.terraform
         4: string.terraform punctuation.definition.string.end.terraform
         5: string.terraform punctuation.definition.string.begin.terraform
-        6: string.quoted.double.terraform
+        6: string.quoted.double.terraform meta.resource.name.terraform
+        7: string.terraform punctuation.definition.string.end.terraform
+        8: punctuation.definition.tag.terraform
+    - match: '(data)\s+(")(\w+)(")\s+(")([\w-]+)(")\s+({)'
+      scope: meta.data-source.terraform entity.name.resource.terraform
+      captures:
+        1: storage.type.function.terraform
+        2: string.terraform punctuation.definition.string.begin.terraform
+        3: string.quoted.double.terraform meta.data-source.type.terraform
+        4: string.terraform punctuation.definition.string.end.terraform
+        5: string.terraform punctuation.definition.string.begin.terraform
+        6: string.quoted.double.terraform meta.data-source.name.terraform
         7: string.terraform punctuation.definition.string.end.terraform
         8: punctuation.definition.tag.terraform
     - match: '(provider|provisioner|variable|module|atlas)\s+(")([\w-]+)(")\s+({)'
