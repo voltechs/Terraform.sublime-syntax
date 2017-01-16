@@ -124,13 +124,13 @@ contexts:
         - include: interpolation
   interpolation:
     - match: '\$\{'
-      scope: string.quoted.double.terraform punctuation.section.interpolation.begin.terraform
+      scope: string.quoted.double.terraform punctuation.section.embed.begin.terraform
       push:
-        - meta_scope: meta.interpolation.terraform
+        - meta_scope: meta.embed.terraform
         - match: '\}'
           scope: string.quoted.double.terraform
           captures:
-            0: punctuation.section.interpolation.end.terraform
+            0: punctuation.section.embed.end.terraform
           pop: true
         - include: interpolated_terraform
   interpolated_terraform:
