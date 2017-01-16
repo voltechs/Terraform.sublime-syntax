@@ -6,27 +6,34 @@ require "json"
 BASE_URL = "https://www.terraform.io"
 RESOURCE_PATTERN = %r{^/docs/providers/\w+/r}
 DATA_SOURCE_PATTERN = %r{^/docs/providers/\w+/d}
-PROVIDERS = %w[aws template terraform postgresql]
 
-task :default => ["resources.py"]
+desc "Generate completion files"
+task :completions do
+  threads = get_providers.map do |provider, uri|
+    res_thr = Thread.new { get_terraform_resource_keys(uri, RESOURCE_PATTERN) }
+    dat_thr = Thread.new { get_terraform_resource_keys(uri, DATA_SOURCE_PATTERN) }
 
-task "resources.py" do
-  resources    = PROVIDERS.flat_map { |provider| get_resources(provider, RESOURCE_PATTERN) }
-  data_sources = PROVIDERS.flat_map { |provider| get_resources(provider, DATA_SOURCE_PATTERN) }
+    [res_thr, dat_thr]
+  end
 
-  write_completion_file("Resources", scope: "meta.resource.type.terraform", completions: resources)
-  write_completion_file("Data Sources", scope: "meta.data-source.type.terraform", completions: data_sources)
+  completions = threads.each_with_object(Hash.new { |h,k| h[k] = [] }) do |(res, data), hash|
+    hash[:resources] += res.value
+    hash[:data_sources] += data.value
+  end
+
+  write_completion_file("Resources", scope: "meta.resource.type.terraform", completions: completions[:resources].sort)
+  write_completion_file("Data Sources", scope: "meta.data-source.type.terraform", completions: completions[:data_sources].sort)
+end
+
+desc "List providers"
+task :providers do
+  puts get_providers.map(&:first)
 end
 
 def write_completion_file(name, completions={})
   File.open("Completions/#{name}.sublime-completions", "w") do |f|
     f.write(JSON.pretty_generate(completions))
   end
-end
-
-def get_resources(provider, pattern)
-  uri = URI("https://www.terraform.io/docs/providers/#{provider}/index.html")
-  get_terraform_resource_keys(uri, pattern)
 end
 
 def get_terraform_resource_keys(uri, href_pattern)
