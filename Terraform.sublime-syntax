@@ -135,16 +135,19 @@ contexts:
         - include: interpolated_terraform
   interpolated_terraform:
     - include: variable_reference
+    - include: function
+  function:
     - match: '(\w+)\('
       comment: functions in interpolations
       captures:
         1: support.function.terraform
       push:
         - include: variable_reference
+        - include: arithmetic_operators
+        - include: function
+        - include: main
         - match: '\)'
           pop: true
-        - include: arithmetic_operators
-        - include: main
   arithmetic_operators:
     - match: (%|&|\*|\+|\-|/)
       scope: keyword.operator.arithmetic.terraform
