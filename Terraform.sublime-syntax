@@ -104,6 +104,8 @@ contexts:
       captures:
         1: entity.name.section.terraform
         2: punctuation.definition.tag.terraform
+    - include: strings
+  strings:
     - match: '"'
       comment: Strings
       scope: punctuation.definition.string.begin.terraform
@@ -137,6 +139,9 @@ contexts:
   interpolated_terraform:
     - include: variable_reference
     - include: function
+    - include: operators
+    - include: interpolation
+    - include: strings
   function:
     - match: '(\w+)\('
       comment: functions in interpolations
@@ -144,12 +149,15 @@ contexts:
         1: support.function.terraform
       push:
         - include: variable_reference
-        - include: arithmetic_operators
         - include: function
         - include: main
         - match: '\)'
           pop: true
-  arithmetic_operators:
+  operators:
+    - match: '\?|:'
+      scope: keyword.operator.conditional.terraform
+    - match: '==|!=|>|<|>=|<=|&&|\|\||!'
+      scope: keyword.operator.comparison.terraform
     - match: (%|&|\*|\+|\-|/)
       scope: keyword.operator.arithmetic.terraform
   variable_reference:
