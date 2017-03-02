@@ -4,7 +4,4 @@
 
   // Format terraform source files on save using terraform fmt
   "format_on_save": true,
-
-  // Format terraform var file (.tfvars)
-  "format_var_files": false
 }

@@ -12,13 +12,14 @@ class TerraformFmtOnSave(sublime_plugin.EventListener):
 
     view.run_command('terraform_fmt')
 
+
 class TerraformFmt(sublime_plugin.TextCommand):
   def is_enabled(self):
     settings      = sublime.load_settings('Terraform.sublime-settings')
     fmt_enabled   = settings.get('format_on_save', True)
-    fmt_vars_file = settings.get('format_var_files', False)
 
-    return fmt_enabled and is_terraform_source(self.view) and should_format_vars_file(self.view, fmt_vars_file)
+    return fmt_enabled and is_terraform_source(self.view) and not is_var_file(self.view)
+
 
   def run(self, edit):
     res = self.run_fmt()
@@ -30,6 +31,7 @@ class TerraformFmt(sublime_plugin.TextCommand):
 
     # Hide errors panel
     self.view.window().run_command('hide_panel', { 'panel': 'output.terraform_syntax_errors' })
+
 
   def run_fmt(self):
     with self.popen_terraform_fmt() as p:
@@ -43,6 +45,7 @@ class TerraformFmt(sublime_plugin.TextCommand):
 
       return stdout
 
+
   def popen_terraform_fmt(self):
     cmd = sublime.load_settings('Terraform.sublime-settings').get('terraform_path', 'terraform')
     return subprocess.Popen(
@@ -51,20 +54,23 @@ class TerraformFmt(sublime_plugin.TextCommand):
       stderr=subprocess.PIPE,
       stdin=subprocess.PIPE)
 
+
   def view_content_bytes(self):
     region = sublime.Region(0, self.view.size())
     buf = self.view.substr(region)
     return bytes(buf, self.encoding())
 
+
   def encoding(self):
     enc = self.view.encoding()
 
-    # When a selection is actuve the encoding is undefined. Fall back to utf-8
+    # When a selection is active the encoding is undefined. Fall back to utf-8
     # by default.
     if enc == "Undefined":
       return "UTF-8"
 
     return enc
+
 
   def show_syntax_errors(self, errors):
     window = self.view.window()
@@ -74,16 +80,15 @@ class TerraformFmt(sublime_plugin.TextCommand):
     panel.settings().set('result_file_regex', '^(.+):\s.+At\s(\d+):(\d+):\s(.*)$')
     panel.settings().set('result_base_dir', path.dirname(self.view.file_name()))
     panel.set_scratch(True)
-    panel.set_read_only(False)
     panel.run_command('append', {'characters': errors})
     panel.set_read_only(True)
     window.run_command('show_panel', { 'panel': 'output.terraform_syntax_errors' })
 
-def should_format_vars_file(view, enabled):
+
+def is_var_file(view):
   _, ext = path.splitext(view.file_name())
-  if ext != '.tfvars':
-      return True
-  return enabled
+  return ext == '.tfvars'
+
 
 def is_terraform_source(view):
   tp = 0
