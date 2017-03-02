@@ -5,7 +5,7 @@ require "json"
 
 BASE_URL = "https://www.terraform.io"
 RESOURCE_PATTERN = %r{^/docs/providers/\w+/r}
-DATA_SOURCE_PATTERN = %r{^/docs/providers/\w+/d}
+DATA_SOURCE_PATTERN = %r{^/docs/providers/\w+/d/}
 
 desc "Generate completion files"
 task :completions do
@@ -20,6 +20,8 @@ task :completions do
     hash[:resources] += res.value
     hash[:data_sources] += data.value
   end
+
+  completions[:data_sources] << "external"
 
   write_completion_file("Resources", scope: "meta.resource.type.terraform", completions: completions[:resources].sort)
   write_completion_file("Data Sources", scope: "meta.data-source.type.terraform", completions: completions[:data_sources].sort)

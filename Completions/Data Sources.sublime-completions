@@ -47,6 +47,7 @@
     "azurerm_client_config",
     "consul_keys",
     "docker_registry_image",
+    "external",
     "fastly_ip_ranges",
     "google_compute_zones",
     "google_iam_policy",
