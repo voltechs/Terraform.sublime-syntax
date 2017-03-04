@@ -17,15 +17,10 @@
                         "children":
                         [
                             {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/Terraform/Terraform.sublime-settings"},
-                                "caption": "Settings – Default"
+                                "command": "edit_settings",
+                                "args": { "base_file": "${packages}/sublime-terraform/Terraform.sublime-settings" },
+                                "caption": "Settings"
                             },
-                            {
-                                "command": "open_file",
-                                "args": {"file": "${packages}/User/Terraform.sublime-settings"},
-                                "caption": "Settings – User"
-                            }
                         ]
                     }
                 ]
