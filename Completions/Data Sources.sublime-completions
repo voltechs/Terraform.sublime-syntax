@@ -1,10 +1,6 @@
 {
   "scope": "meta.data-source.type.terraform",
   "completions": [
-    "alicloud_images",
-    "alicloud_instance_types",
-    "alicloud_regions",
-    "alicloud_zones",
     "archive_file",
     "atlas_artifact",
     "aws_acm_certificate",
