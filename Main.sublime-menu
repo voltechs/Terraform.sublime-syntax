@@ -18,7 +18,7 @@
                         [
                             {
                                 "command": "edit_settings",
-                                "args": { "base_file": "${packages}/sublime-terraform/Terraform.sublime-settings" },
+                                "args": { "base_file": "${packages}/Terraform.tmLanguage/Terraform.sublime-settings" },
                                 "caption": "Settings"
                             },
                         ]
