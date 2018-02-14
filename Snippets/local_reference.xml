@@ -1,0 +1,8 @@
+<snippet>
+	<content><![CDATA[
+"\$\{local.${1:name}\}"
+]]></content>
+	<tabTrigger>local</tabTrigger>
+	<scope>source.terraform</scope>
+	<description>local reference</description>
+</snippet>

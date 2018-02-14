@@ -161,7 +161,7 @@ contexts:
     - match: (%|&|\*|\+|\-|/)
       scope: keyword.operator.arithmetic.terraform
   variable_reference:
-    - match: '\b(self|count|path|var)\b\.?'
+    - match: '\b(self|count|path|var|local)\b\.?'
       captures:
         1: variable.language.terraform
   string_placeholder:
