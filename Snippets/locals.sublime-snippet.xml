@@ -1,0 +1,10 @@
+<snippet>
+	<content><![CDATA[
+locals {
+	name = "${1:name}"
+}
+]]></content>
+	<tabTrigger>locals</tabTrigger>
+	<scope>source.terraform</scope>
+	<description>locals block</description>
+</snippet>
