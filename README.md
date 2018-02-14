@@ -18,10 +18,10 @@ Installation
 1. Having [Package Control](https://packagecontrol.io/installation) installed
 2. Open the palette by pressing `Ctrl+Shift+P` (Win, Linux) or `Cmd+Shift+P` (OS X).
 3. Select _"Package Control: Add Repository"_
-4. Enter `https://github.com/tmichel/Terraform.tmLanguage`
+4. Enter `https://github.com/voltechs/Terraform.sublime-syntax`
 5. Open command palette again
 6. Select _"Package Control: Install Package"_
-7. Select _"Terraform.tmLanguage"_
+7. Select _"Terraform.sublime-syntax"_
 
 ### Manually
 
@@ -32,7 +32,7 @@ Installation
 
 2. Clone this repo:
 
-        $ git clone https://github.com/voltechs/Terraform.tmLanguage
+        $ git clone https://github.com/voltechs/Terraform.sublime-syntax
 
 ## Configuration
 

@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 # http://www.sublimetext.com/docs/3/syntax.html
-name: Terraform
+name: Terraform Syntax
 file_extensions:
   - tf
   - tfvars
@@ -71,7 +71,7 @@ contexts:
         7: punctuation.definition.string.begin.terraform
         8: meta.data-source.name.terraform
         9: punctuation.definition.string.end.terraform
-    - match: '(provider|provisioner|variable|module|atlas)\s+(")([\w-]+)(")\s+({)'
+    - match: '(provider|provisioner|variable|module|atlas|locals)\s+(")([\w-]+)(")\s+({)'
       scope: entity.name.resource.terraform
       captures:
         1: storage.type.function.terraform
