@@ -32,7 +32,7 @@ Installation
 
 2. Clone this repo:
 
-        $ git clone https://github.com/tmichel/sublime-terraform
+        $ git clone https://github.com/voltechs/sublime-terraform
 
 ## Configuration
 
@@ -47,5 +47,5 @@ To update the completion files you will need Ruby 2.2+
 2. `bundle install`
 3. `bundle exec rake completions`
 
-[base_repo]: github.com/alexlouden/Terraform.tmLanguage
+[base_repo]: https://github.com/alexlouden/Terraform.tmLanguage
 [settings_file]: Terraform.sublime-settings
