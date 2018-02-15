@@ -71,7 +71,7 @@ contexts:
         7: punctuation.definition.string.begin.terraform
         8: meta.data-source.name.terraform
         9: punctuation.definition.string.end.terraform
-    - match: '(provider|provisioner|variable|module|atlas|locals)\s+(")([\w-]+)(")\s+({)'
+    - match: '(provider|provisioner|variable|module)\s+(")([\w-]+)(")\s+({)'
       scope: entity.name.resource.terraform
       captures:
         1: storage.type.function.terraform
@@ -79,6 +79,11 @@ contexts:
         3: string.quoted.double.terraform
         4: string.terraform punctuation.definition.string.end.terraform
         5: punctuation.definition.tag.terraform
+    - match: '(atlas|locals)\s+({)'
+      scope: entity.name.resource.terraform
+      captures:
+        1: storage.type.function.terraform
+        2: punctuation.definition.tag.terraform
     - match: '(output)\s+(")([\w-\.]+)(")\s+({)'
       scope: entity.name.resource.terraform
       captures:
@@ -131,9 +136,9 @@ contexts:
       scope: punctuation.section.embed.begin.terraform
       push:
         - meta_scope: meta.embed.terraform
-        - match: '\}'
+        - match: '.*(\})'
           captures:
-            0: punctuation.section.embed.end.terraform
+            1: punctuation.section.embed.end.terraform
           pop: true
         - include: interpolated_terraform
   interpolated_terraform:
